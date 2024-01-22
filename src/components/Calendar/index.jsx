@@ -1,22 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { events } from "./events";
 import Selector from "../Selector";
 import Weekdays from "../Weekdays";
 import Month from "../Month";
 
 const Calendar = () => {
+  const location = useLocation();
   const [days, setDays] = useState(31);
-  const [selectedMonth, setSelectedMonth] = useState(1);
   const [selectedYear, setSelectedYear] = useState(2024);
+  const [selectedMonth, setSelectedMonth] = useState(1);
 
-  const history = useHistory();
+  const navigate = useNavigate();
+  const CurrentYear = new Date().getFullYear();
 
   useEffect(() => {
-    const month = selectedMonth !== 0 ? selectedMonth:12;
+    const ym = specifiedYearAndMonth();
+    setSelectedYear(Number(ym.year));
+    setSelectedMonth(Number(ym.month === 12 ? 0:ym.month));
+  }, []);
+
+  useEffect(() => {
+    const month = selectedMonth !== 0
+      ? selectedMonth
+      : 12;
     const queryParam = '/' + selectedYear + '/' + month;
-    history.push(queryParam);
-  }, [days, selectedMonth, selectedYear, history ]);
+    navigate(queryParam, {replace:true});
+  }, [selectedMonth, selectedYear, navigate]);
 
   const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
 
@@ -25,10 +35,10 @@ const Calendar = () => {
     let currentMonth = selectedMonth;
 
     if (selectedMonth === 0) {
-      currentYear += 1;
-      currentMonth = 1 // Jan.
+      currentYear += + 1;
+      currentMonth = 1  // Jan.
     } else if(selectedMonth === 11) {
-      currentMonth = 0;
+      currentMonth = 0; // Dec.
     } else {
       currentMonth += 1;
     }
@@ -79,6 +89,33 @@ const Calendar = () => {
     }
     if (!!oneWeek.length) calendarData.push(oneWeek);
     return calendarData;
+  };
+
+  const specifiedYearAndMonth = () => {
+    const { pathname } = location;
+    const [empty, year, month] = pathname.split('/');
+
+    const yearValid = (year) => {
+      const pattern = /(?:(?:19|20)[0-9]{2})/g;
+      return pattern.test(year);
+    }
+
+    const monthValid = (month) => {
+      const pattern = /(^0?[1-9]$)|(^1[0-2]$)/;
+      return pattern.test(month);
+    }
+
+    if(pathname.length < 7) {
+      return {
+        year: CurrentYear,
+        month: 1
+      };
+    }
+
+    return {
+      year: yearValid(year) ? year : CurrentYear,
+      month: monthValid(month) ? month : 1
+    };
   };
 
   return (

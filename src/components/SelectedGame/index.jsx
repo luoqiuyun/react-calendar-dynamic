@@ -25,15 +25,14 @@ const SelectedGame = ({game, images}) => {
   });
 
   const dateAvailable = () => {
-    const url = window.location.href;
-    const segments = url.split('/');
-    const eventDate = months[segments[4]] + ' ' + game.dom + 'th ' + segments[3];
+    const { pathname } = window.location;
+    const [empty, year, month] = pathname.split('/');
+    const eventDate = months[month] + ' ' + game.dom + 'th ' + year;
     return eventDate;
   };
 
   const gameDescription = () => {
     let title;
-
     if (game.title.indexOf(':') > -1) {
       const titleSegments = game.title.split(':');
       title = titleSegments[0].toUpperCase() + ': ' + titleSegments[1];

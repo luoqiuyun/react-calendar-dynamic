@@ -1,9 +1,15 @@
-import EventsCalendar from "./components/Calendar"
+import { Routes, Route, useLocation } from 'react-router-dom';
+import EventsCalendar from "./components/Calendar";
 
-function App() {
+const App = () => {
+
   return (
-    <EventsCalendar />
-  )
-}
+    <>
+       <Routes>
+          <Route path="*" element={<EventsCalendar />} />
+       </Routes>
+    </>
+  );
+};
 
 export default App
