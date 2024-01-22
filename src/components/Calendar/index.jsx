@@ -12,9 +12,40 @@ const Calendar = () => {
   const [selectedMonth, setSelectedMonth] = useState(1);
 
   const navigate = useNavigate();
-  const CurrentYear = new Date().getFullYear();
+  
 
   useEffect(() => {
+
+    const specifiedYearAndMonth = () => {
+      const CurrentYear = new Date().getFullYear();
+      const { pathname } = location;
+      const params = pathname.split('/');
+      const year = params[1];
+      const month = params[2];
+
+      const yearValid = (year) => {
+        const pattern = /(?:(?:19|20)[0-9]{2})/g;
+        return pattern.test(year);
+      }
+
+      const monthValid = (month) => {
+        const pattern = /(^0?[1-9]$)|(^1[0-2]$)/;
+        return pattern.test(month);
+      }
+
+      if(pathname.length < 7) {
+        return {
+          year: CurrentYear,
+          month: 1
+        };
+      }
+
+      return {
+        year: yearValid(year) ? year : CurrentYear,
+        month: monthValid(month) ? month : 1
+      };
+    };
+
     const ym = specifiedYearAndMonth();
     setSelectedYear(Number(ym.year));
     setSelectedMonth(Number(ym.month === 12 ? 0:ym.month));
@@ -89,33 +120,6 @@ const Calendar = () => {
     }
     if (!!oneWeek.length) calendarData.push(oneWeek);
     return calendarData;
-  };
-
-  const specifiedYearAndMonth = () => {
-    const { pathname } = location;
-    const [empty, year, month] = pathname.split('/');
-
-    const yearValid = (year) => {
-      const pattern = /(?:(?:19|20)[0-9]{2})/g;
-      return pattern.test(year);
-    }
-
-    const monthValid = (month) => {
-      const pattern = /(^0?[1-9]$)|(^1[0-2]$)/;
-      return pattern.test(month);
-    }
-
-    if(pathname.length < 7) {
-      return {
-        year: CurrentYear,
-        month: 1
-      };
-    }
-
-    return {
-      year: yearValid(year) ? year : CurrentYear,
-      month: monthValid(month) ? month : 1
-    };
   };
 
   return (

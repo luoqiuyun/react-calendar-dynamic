@@ -26,7 +26,9 @@ const SelectedGame = ({game, images}) => {
 
   const dateAvailable = () => {
     const { pathname } = window.location;
-    const [empty, year, month] = pathname.split('/');
+    const params = pathname.split('/');
+    const year = params[1];
+    const month = params[2];
     const eventDate = months[month] + ' ' + game.dom + 'th ' + year;
     return eventDate;
   };

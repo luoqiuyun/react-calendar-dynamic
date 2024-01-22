@@ -17,7 +17,7 @@ const Week = ({
       <div class="card-container">
         {days.map((game, i) => 
           <Day
-            key={"day-" + i}
+            key={"weekday-" + i}
             dom={game.dom}
             game={game}
             setSelected={setSelected}
