@@ -30,7 +30,7 @@ const Month = ({ calendar }) => {
             setEventSelected={setEventSelected}
             images={imageList}
           />
-          {weekSelected == i &&
+          {weekSelected === i &&
             <SelectedGame game={gameSelected} images={imageList} />
           }
         </>

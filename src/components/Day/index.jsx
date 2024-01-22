@@ -3,7 +3,7 @@ const Day = ({dom, game, setSelected, images}) => {
   const thumb = !!game && Object.keys(game).length > 1
     ? game.imageFilenameThumb
     : 'none';
-  const addEvent = thumb != 'none';
+  const addEvent = thumb !== 'none';
   const cardClass = addEvent ? "card game-event" : "card"
 
   const imgUrl = images.find(element => {

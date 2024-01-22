@@ -16,7 +16,7 @@ const Calendar = () => {
     const month = selectedMonth !== 0 ? selectedMonth:12;
     const queryParam = '/' + selectedYear + '/' + month;
     history.push(queryParam);
-  }, [days, selectedMonth]);
+  }, [days, selectedMonth, selectedYear, history ]);
 
   const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
 
