@@ -1,0 +1,44 @@
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-column-gap: 5px;
+  grid-row-gap: 0;
+}
+.card {
+  aspect-ratio: 1;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  margin-top: 4px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.15);
+}
+.day-of-month {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.day-with-game {
+  position: absolute;
+  padding: 2px 1px 0;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  background-color: #4169E1;
+  border-radius: 50%;
+}
+.game-event {
+  cursor: pointer;
+}
