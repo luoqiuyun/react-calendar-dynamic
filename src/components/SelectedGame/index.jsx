@@ -23,13 +23,28 @@ const SelectedGame = ({game, images}) => {
   const imgUrl = images.find(element => {
     return element.includes(thumb);
   });
+  
+  const nthNumber = (number) => {
+    if (number > 3 && number < 21) return "th";
+    switch (number % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  };
 
   const dateAvailable = () => {
     const { pathname } = window.location;
     const params = pathname.split('/');
     const year = params[1];
     const month = params[2];
-    const eventDate = months[month] + ' ' + game.dom + 'th ' + year;
+    const day = game.dom;
+    const eventDate = `${months[month]} ${day}${nthNumber(day)}, ${year}`;
     return eventDate;
   };
 
