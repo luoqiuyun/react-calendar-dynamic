@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { getImageList } from "./utils";
+import { getImageList, getSelectedYearMonth, getCalendar, prev, next } from "./utils";
 import { events } from "./events";
 import Selector from "../Selector";
 import Weekdays from "../Weekdays";
@@ -11,43 +11,11 @@ const Calendar = () => {
   const [selectedYear, setSelectedYear] = useState(2024);
   const [selectedMonth, setSelectedMonth] = useState(1);
 
-  const location = useLocation();
   const navigate = useNavigate();
-  const daysInMonth = (year, month) => 
-    new Date(year, month, 0).getDate();
+  const location = useLocation();
   
   useEffect(() => {
-    const specifiedYearAndMonth = () => {
-      const CurrentYear = new Date().getFullYear();
-      const { pathname } = location;
-      const params = pathname.split('/');
-      const year = params[1];
-      const month = params[2];
-
-      const yearValid = (year) => {
-        const pattern = /(?:(?:19|20)[0-9]{2})/g;
-        return pattern.test(year);
-      }
-
-      const monthValid = (month) => {
-        const pattern = /(^0?[1-9]$)|(^1[0-2]$)/;
-        return pattern.test(month);
-      }
-
-      if(pathname.length < 7) {
-        return {
-          year: CurrentYear,
-          month: 1
-        };
-      }
-
-      return {
-        year: yearValid(year) ? year : CurrentYear,
-        month: monthValid(month) ? month : 1
-      };
-    };
-
-    const ym = specifiedYearAndMonth();
+    const ym = getSelectedYearMonth(location);
     setSelectedYear(Number(ym.year));
     setSelectedMonth(Number(ym.month === 12 ? 0:ym.month));
   }, []);
@@ -61,65 +29,18 @@ const Calendar = () => {
   }, [selectedMonth, selectedYear, navigate]);
 
   const nextMonth = () => {
-    let currentYear = selectedYear;
-    let currentMonth = selectedMonth;
-
-    if (selectedMonth === 0) {
-      currentYear += + 1;
-      currentMonth = 1  // Jan.
-    } else if(selectedMonth === 11) {
-      currentMonth = 0; // Dec.
-    } else {
-      currentMonth += 1;
-    }
-    setSelectedYear(currentYear);
-    setSelectedMonth(currentMonth);
-    const days = daysInMonth(currentYear, currentMonth);
-    setDays(days);
+    const selectedDate = next(selectedYear, selectedMonth);
+    setDays(selectedDate.days);
+    setSelectedYear(selectedDate.nextYear);
+    setSelectedMonth(selectedDate.nextMonth);
   }
 
   const prevMonth = () => {
-    let currentYear = selectedYear;
-    let currentMonth = selectedMonth;
-
-    if (selectedMonth === 1) {
-      currentYear -= 1;
-      currentMonth = 0 // Dec.
-    } else if (currentMonth === 0) {
-      currentMonth = 11;
-    } else {
-      currentMonth -= 1;
-    }
-    setSelectedYear(currentYear);
-    setSelectedMonth(currentMonth);
-    const days = daysInMonth(currentYear, currentMonth);
-    setDays(days);
+    const selectedDate = prev(selectedYear, selectedMonth);
+    setDays(selectedDate.days);
+    setSelectedYear(selectedDate.prevYear);
+    setSelectedMonth(selectedDate.prevMonth);
   }
-
-  const getCalendar = (daysInMonth) => {
-    const calendarData = [];
-    let oneWeek = [];
-    for(let i = 1; i <= daysInMonth; i++) {
-      const addEvent = Math.random() > 0.7;
-      const eventCount = events.length;
-      const eventIdx = Math.floor(Math.random() * eventCount);
-
-      if (!!addEvent) {
-        const event = {...events[eventIdx], "dom": i};
-        oneWeek.push(event);
-      } else {
-        const dayofMonth = {"dom": i};
-        oneWeek.push(dayofMonth);
-      }
-
-      if (!(i % 7)) {
-        calendarData.push(oneWeek);
-        oneWeek = [];
-      }
-    }
-    if (!!oneWeek.length) calendarData.push(oneWeek);
-    return calendarData;
-  };
 
   return (
     <div class="calendar-container">
@@ -131,7 +52,7 @@ const Calendar = () => {
       />
       <hr />
       <Weekdays />
-      <Month calendar={getCalendar(days)} eventImages={getImageList()} />
+      <Month calendar={getCalendar(days, events)} eventImages={getImageList()} />
     </div>
   );
 };

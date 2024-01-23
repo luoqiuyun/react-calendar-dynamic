@@ -5,11 +5,9 @@ import EventsCalendar from "./components/Calendar";
 const App: React.FC = () => {
 
   return (
-    <>
-       <Routes>
-          <Route path="*" element={<EventsCalendar />} />
-       </Routes>
-    </>
+    <Routes>
+      <Route path="*" element={<EventsCalendar />} />
+    </Routes>
   );
 };
 
