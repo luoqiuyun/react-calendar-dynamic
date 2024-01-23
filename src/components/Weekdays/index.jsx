@@ -1,12 +1,13 @@
+import React from 'react';
 import './styles.css';
 
-const Weekdays = () => {
+const Weekdays: React.FC = () => {
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   
   return (
-    <div class="weekday-container">
+    <div className="weekday-container">
       {daysOfWeek.map((weekday, i) => 
-        <div key={"weekday-" + i} class="week-day">
+        <div key={`weekday-${i}`} className="week-day">
           {weekday}
         </div>
       )}

@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
+import { getImageList } from "./utils";
 import { events } from "./events";
 import Selector from "../Selector";
 import Weekdays from "../Weekdays";
 import Month from "../Month";
 
 const Calendar = () => {
-  const location = useLocation();
   const [days, setDays] = useState(31);
   const [selectedYear, setSelectedYear] = useState(2024);
   const [selectedMonth, setSelectedMonth] = useState(1);
 
+  const location = useLocation();
   const navigate = useNavigate();
+  const daysInMonth = (year, month) => 
+    new Date(year, month, 0).getDate();
   
-
   useEffect(() => {
-
     const specifiedYearAndMonth = () => {
       const CurrentYear = new Date().getFullYear();
       const { pathname } = location;
@@ -58,8 +59,6 @@ const Calendar = () => {
     const queryParam = '/' + selectedYear + '/' + month;
     navigate(queryParam, {replace:true});
   }, [selectedMonth, selectedYear, navigate]);
-
-  const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
 
   const nextMonth = () => {
     let currentYear = selectedYear;
@@ -132,7 +131,7 @@ const Calendar = () => {
       />
       <hr />
       <Weekdays />
-      <Month calendar={getCalendar(days)} />
+      <Month calendar={getCalendar(days)} eventImages={getImageList()} />
     </div>
   );
 };

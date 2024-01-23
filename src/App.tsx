@@ -1,7 +1,8 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import EventsCalendar from "./components/Calendar";
 
-const App = () => {
+const App: React.FC = () => {
 
   return (
     <>
@@ -12,4 +13,4 @@ const App = () => {
   );
 };
 
-export default App
+export default App;
