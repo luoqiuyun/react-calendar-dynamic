@@ -1,21 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Game, Calendar, Images } from "../types";
 import SelectedGame from "../SelectedGame";
 import Week from "../Week";
-
-type Game = {
-  id: string;
-  launchDate: string;
-  title: string;
-  summary: string;
-  imageFilenameThumb: string;
-  imageFilenameFull: string;
-  learnMoreLink: string;
-  purchaseLink: string;
-  dom?: number;
-};
-
-type Images = string[];
-type Calendar = Game[][];
 
 type MonthProps = {
   calendar: Calendar;

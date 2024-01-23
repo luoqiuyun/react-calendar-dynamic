@@ -1,19 +1,6 @@
 import React from 'react';
+import { Game, Images } from "../types";
 import './styles.css';
-
-type Game = {
-  id: string;
-  launchDate: string;
-  title: string;
-  summary: string;
-  imageFilenameThumb: string;
-  imageFilenameFull: string;
-  learnMoreLink: string;
-  purchaseLink: string;
-  dom?: number;
-};
-
-type Images = string[];
 
 type WeekDayProps = {
   game?: Game;

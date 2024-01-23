@@ -1,20 +1,7 @@
 import React from 'react';
-import { nthNumber, getMonthNames } from "./utils";
+import { nthNumber, getMonthNames } from "./helpers";
+import { Game, Images } from "../types";
 import './styles.css';
-
-type Game = {
-  id: string;
-  launchDate: string;
-  title: string;
-  summary: string;
-  imageFilenameThumb: string;
-  imageFilenameFull: string;
-  learnMoreLink: string;
-  purchaseLink: string;
-  dom?: number;
-};
-
-type Images = string[];
 
 type SelectedGameProps = {
   game: Game;

@@ -9,8 +9,8 @@ function getSelectedYearMonth(location) {
   const CurrentYear = new Date().getFullYear();
   const { pathname } = location;
   const params = pathname.split('/');
-  const year = params[1];
-  const month = params[2];
+  const year = Number(params[1]);
+  const month = Number(params[2]);
 
   const yearValid = (year) => {
     const pattern = /(?:(?:19|20)[0-9]{2})/g;
