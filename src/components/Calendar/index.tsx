@@ -87,7 +87,7 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        calendar={getCalendar(days, events)}
+        calendar={getCalendar(days, games)}
         eventImages={getImageList()}
       />
     </div>
