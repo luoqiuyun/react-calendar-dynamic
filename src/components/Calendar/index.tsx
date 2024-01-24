@@ -21,19 +21,19 @@ const Calendar: React.FC = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-
+/*
   useEffect(() => {
     fetch('/api/events')
     .then(response => response)
     .then(data => console.log(data))
   }, []);
-/*
+*/
   useEffect(() => {
     fetch('/api/games')
     .then(response => response.json())
     .then(data => console.log(data))
   }, []);
-*/
+
   useEffect(() => {
     const ym = getSelectedYearMonth(location);
 
