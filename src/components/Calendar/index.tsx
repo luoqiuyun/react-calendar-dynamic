@@ -18,6 +18,7 @@ const Calendar: React.FC = () => {
   const [days, setDays] = useState(31);
   const [selectedYear, setSelectedYear] = useState(2024);
   const [selectedMonth, setSelectedMonth] = useState(1);
+  const [games, setGames] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,8 +32,12 @@ const Calendar: React.FC = () => {
   useEffect(() => {
     fetch('/api/games')
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => setGames(data))
   }, []);
+
+  useEffect(() => {
+    console.log(games)
+  }, [games]);
 
   useEffect(() => {
     const ym = getSelectedYearMonth(location);
