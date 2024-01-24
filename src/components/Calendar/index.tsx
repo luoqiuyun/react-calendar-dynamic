@@ -23,6 +23,18 @@ const Calendar: React.FC = () => {
   const location = useLocation();
   
   useEffect(() => {
+    fetch('/api/events')
+    .then(response => response)
+    .then(data => console.log(data))
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/games')
+    .then(response => response)
+    .then(data => console.log(data))
+  }, []);
+
+  useEffect(() => {
     const ym = getSelectedYearMonth(location);
 
     if (!validMonth(ym.month) || !validYear(ym.year)) {
