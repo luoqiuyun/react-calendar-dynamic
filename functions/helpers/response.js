@@ -1,4 +1,6 @@
-const events = [
+import { events } from './events';
+
+const eventssss = [
   {
     "id": "939705715c6b3898dd3da5",
     "launchDate": "2023-14-29T21:32:46.879Z",
@@ -90,6 +92,8 @@ const events = [
     "purchaseLink": "https://www.playstation.com/en-us/games/fall-guys-ultimate-knockout/#buy-now",
   }
 ];
+
+console.log(events);
 
 module.exports = (statusCode) => {
   return {

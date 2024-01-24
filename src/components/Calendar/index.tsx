@@ -24,12 +24,6 @@ const Calendar: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    fetch('/api/events')
-    .then(response => response.json())
-    .then(data => console.log(data))
-  }, []);
-
-  useEffect(() => {
     fetch('/api/games')
     .then(response => response.json())
     .then(data => setGames(data))
@@ -83,7 +77,7 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        calendar={getCalendar(days, games)}   // getCalendar(days, events)
+        calendar={getCalendar(days, games)}   // getCalendar(days, events) use static data
         eventImages={getImageList()}
       />
     </div>
