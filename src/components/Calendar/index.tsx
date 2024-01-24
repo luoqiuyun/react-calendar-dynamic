@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { getImageList, getSelectedYearMonth, getCalendar, prev, next } from "./helpers";
 import { events } from "./events";
 import Selector from "../Selector";
 import Weekdays from "../Weekdays";
 import Month from "../Month";
+import {
+  getImageList,
+  getSelectedYearMonth,
+  getCalendar,
+  prev,
+  next,
+  validMonth,
+  validYear
+} from "./helpers";
 
 const Calendar: React.FC = () => {
   const [days, setDays] = useState(31);
@@ -16,11 +24,17 @@ const Calendar: React.FC = () => {
   
   useEffect(() => {
     const ym = getSelectedYearMonth(location);
+
+    if (!validMonth(ym.month) || !validYear(ym.year)) {
+      window.history.back();
+    }
+
     const month = ym.month !== 12
       ? ym.month
       : 0;
-    setSelectedYear(Number(ym.year));
-    setSelectedMonth(Number(month));
+
+    setSelectedYear(ym.year);
+    setSelectedMonth(month);
   }, []);
 
   useEffect(() => {

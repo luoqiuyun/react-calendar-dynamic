@@ -14,7 +14,7 @@ type WeekProps = {
 const Week: React.FC<WeekProps> = ({ week, days, images, setWeekSelected, setGameSelected }) => {
 
   return (
-    <div className="card-container">
+    <div className="card-container" data-testid="week">
       {days.map((game, i) => 
         <WeekDay
           key={`weekday-${i}`}

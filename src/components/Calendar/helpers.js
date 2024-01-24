@@ -1,3 +1,13 @@
+function validYear(year) {
+  const pattern = /(?:(?:19|20)[0-9]{2})/g;
+  return pattern.test(year);
+}
+
+function validMonth(month) {
+  const pattern = /(^0?[1-9]$)|(^1[0-2]$)/;
+  return pattern.test(month);
+}
+
 function getImageList() {
   const images = require.context('../../assets/img', true);
   const imageList = images.keys().map(image => images(image));
@@ -12,16 +22,6 @@ function getSelectedYearMonth(location) {
   const year = Number(params[1]);
   const month = Number(params[2]);
 
-  const yearValid = (year) => {
-    const pattern = /(?:(?:19|20)[0-9]{2})/g;
-    return pattern.test(year);
-  }
-
-  const monthValid = (month) => {
-    const pattern = /(^0?[1-9]$)|(^1[0-2]$)/;
-    return pattern.test(month);
-  }
-
   if(pathname.length < 7) {
     return {
       year: CurrentYear,
@@ -29,9 +29,13 @@ function getSelectedYearMonth(location) {
     };
   }
 
+  if (!validYear(year) || !validMonth(month)) {
+    return { year: -1, month: -1};
+  }
+
   return {
-    year: yearValid(year) ? year : CurrentYear,
-    month: monthValid(month) ? month : 1
+    year: validYear(year) ? year : Number(CurrentYear),
+    month: validMonth(month) ? month : 1
   };
 };
 
@@ -108,6 +112,8 @@ const prev = (selectedYear, selectedMonth) => {
 export {
   prev,
   next,
+  validYear,
+  validMonth,
   getCalendar,
   getImageList,
   getSelectedYearMonth
