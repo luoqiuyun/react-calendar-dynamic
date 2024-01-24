@@ -1,8 +1,5 @@
-import { events } from "./helpers/events";
+const getGames = require('./helpers/getGames');
 
-exports.handler = async () => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(events),
-  };
-}
+exports.handler = async (event) => {
+  return await getGames(event);
+};

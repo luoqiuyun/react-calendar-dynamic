@@ -30,7 +30,7 @@ const Calendar: React.FC = () => {
 
   useEffect(() => {
     fetch('/api/games')
-    .then(response => response)
+    .then(response => response.json())
     .then(data => console.log(data))
   }, []);
 
