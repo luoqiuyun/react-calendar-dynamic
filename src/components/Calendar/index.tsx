@@ -22,22 +22,18 @@ const Calendar: React.FC = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-/*
+
   useEffect(() => {
     fetch('/api/events')
-    .then(response => response)
+    .then(response => response.json())
     .then(data => console.log(data))
   }, []);
-*/
+
   useEffect(() => {
     fetch('/api/games')
     .then(response => response.json())
     .then(data => setGames(data))
   }, []);
-
-  useEffect(() => {
-    console.log(games)
-  }, [games]);
 
   useEffect(() => {
     const ym = getSelectedYearMonth(location);
@@ -87,7 +83,7 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        calendar={getCalendar(days, games)}
+        calendar={getCalendar(days, games)}   // getCalendar(days, events)
         eventImages={getImageList()}
       />
     </div>
