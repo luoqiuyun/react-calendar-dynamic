@@ -24,10 +24,14 @@ const Calendar: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    fetch('/api/games')
+    fetch('/api/events')
     .then(response => response.json())
     .then(data => setGames(data))
   }, []);
+
+  useEffect(() => {
+    console.log(games);
+  }, [games]);
 
   useEffect(() => {
     const ym = getSelectedYearMonth(location);
