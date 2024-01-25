@@ -2,11 +2,8 @@
 
 [DEMO](https://cool-sawine-66ea12.netlify.app/)
 
-
 ![Screenshot](screenshot.png)
-
 ![Screenshot](screenshot2.png)
-
 
 # Getting Started with Create React App
 
