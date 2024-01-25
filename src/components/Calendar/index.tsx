@@ -81,8 +81,8 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        // calendar={getCalendar(days, games)}    // api events
-        calendar={getCalendar(days, events)}   // static events
+        calendar={getCalendar(days, games)}    // api
+        //calendar={getCalendar(days, events)} // static
         eventImages={getImageList()}
       />
     </div>
