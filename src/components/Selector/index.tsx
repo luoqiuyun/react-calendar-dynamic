@@ -8,7 +8,13 @@ type SelectorProps = {
   nextMonth: () => void;
 };
 
-const Selector: React.FC<SelectorProps> = ({ month, year, prevMonth, nextMonth }) => {
+const Selector: React.FC<SelectorProps> = ({
+  month,
+  year,
+  prevMonth,
+  nextMonth
+}) => {
+  
   const months = [
     "December",
     "January",

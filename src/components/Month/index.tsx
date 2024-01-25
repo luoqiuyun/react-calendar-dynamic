@@ -9,6 +9,7 @@ type MonthProps = {
 };
 
 const Month: React.FC<MonthProps> = ({ calendar, eventImages }) => {
+  
   const [weekSelected, setWeekSelected] = useState<number | null>(null);
   const [gameSelected, setGameSelected] = useState<Game | null>(null);
 

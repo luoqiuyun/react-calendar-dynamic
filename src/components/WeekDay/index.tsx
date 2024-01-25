@@ -1,6 +1,6 @@
 import React from 'react';
-import { Game, Images } from "../types";
 import './styles.css';
+import { Game, Images } from "../types";
 
 type WeekDayProps = {
   game?: Game;
@@ -10,7 +10,14 @@ type WeekDayProps = {
   images: Images;
 };
 
-const WeekDay: React.FC<WeekDayProps> = ({ game, week, images, setWeekSelected, setGameSelected }) => {
+const WeekDay: React.FC<WeekDayProps> = ({
+  game,
+  week,
+  images,
+  setWeekSelected,
+  setGameSelected
+}) => {
+  
   const thumb = game && game.imageFilenameThumb ? game.imageFilenameThumb : 'none';
   const addEvent = thumb !== 'none';
   const imgUrl = images.find(element => element.includes(thumb)) || '';

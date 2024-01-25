@@ -1,7 +1,7 @@
 import React from 'react';
+import './styles.css';
 import { Game, Images } from "../types";
 import WeekDay from "../WeekDay";
-import './styles.css';
 
 type WeekProps = {
   week: number;
@@ -11,7 +11,13 @@ type WeekProps = {
   images: Images;
 };
 
-const Week: React.FC<WeekProps> = ({ week, days, images, setWeekSelected, setGameSelected }) => {
+const Week: React.FC<WeekProps> = ({
+  week,
+  days,
+  images,
+  setWeekSelected,
+  setGameSelected
+}) => {
 
   return (
     <div className="card-container" data-testid="week">

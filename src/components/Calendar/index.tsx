@@ -15,6 +15,7 @@ import {
 } from "./helpers";
 
 const Calendar: React.FC = () => {
+  
   const [games, setGames] = useState([]);
   const [days, setDays] = useState(31);
   const [monthFirstDay, setMonthFirstDay] = useState(1);
@@ -83,8 +84,8 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
-        //calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
+        //calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
+        calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
         eventImages={getImageList()}
       />
     </div>

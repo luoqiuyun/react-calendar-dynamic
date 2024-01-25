@@ -1,7 +1,7 @@
 import React from 'react';
+import './styles.css';
 import { nthNumber, getMonthNames } from "./helpers";
 import { Game, Images } from "../types";
-import './styles.css';
 
 type SelectedGameProps = {
   game: Game;
@@ -9,9 +9,9 @@ type SelectedGameProps = {
 };
 
 const SelectedGame: React.FC<SelectedGameProps> = ({ game, images }) => {
+
   const thumb = game && game.imageFilenameFull ? game.imageFilenameFull : 'none';
   const imgUrl = images.find(element => element.includes(thumb)) || '';
-
   const months = getMonthNames();
 
   const dateAvailable = () => {
