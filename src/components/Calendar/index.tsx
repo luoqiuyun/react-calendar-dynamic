@@ -18,13 +18,13 @@ const Calendar: React.FC = () => {
   const [days, setDays] = useState(31);
   const [selectedYear, setSelectedYear] = useState(2024);
   const [selectedMonth, setSelectedMonth] = useState(1);
-  const [games, setGames] = useState([]);
+  const [games, setGames] = useState('aaaa');
 
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    fetch('/api/hello-world.js')
+    fetch('/api/hello-world')
     .then(response => response.json())
     .then(data => setGames(data))
   }, []);
