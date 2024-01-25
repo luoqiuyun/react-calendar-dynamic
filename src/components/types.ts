@@ -8,6 +8,7 @@ type Game = {
   learnMoreLink: string;
   purchaseLink: string;
   dom?: number;
+  prevMonth?: boolean;
 };
 
 type Images = string[];
