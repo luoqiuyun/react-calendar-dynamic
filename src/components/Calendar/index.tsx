@@ -84,8 +84,8 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        //calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
-        calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
+        calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
+        //calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
         eventImages={getImageList()}
       />
     </div>
