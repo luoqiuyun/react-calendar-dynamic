@@ -18,7 +18,7 @@ const Calendar: React.FC = () => {
   const [days, setDays] = useState(31);
   const [selectedYear, setSelectedYear] = useState(2024);
   const [selectedMonth, setSelectedMonth] = useState(1);
-  const [games, setGames] = useState(null);
+  const [games, setGames] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
