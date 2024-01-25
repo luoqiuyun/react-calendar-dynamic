@@ -17,6 +17,7 @@ import {
 const Calendar: React.FC = () => {
   const [games, setGames] = useState([]);
   const [days, setDays] = useState(31);
+  const [monthFirstDay, setMonthFirstDay] = useState(0);
   const [selectedYear, setSelectedYear] = useState(2024);
   const [selectedMonth, setSelectedMonth] = useState(1);
 
@@ -40,6 +41,8 @@ const Calendar: React.FC = () => {
       ? ym.month
       : 0;
 
+    const firstDayOfMonth = new Date(`${ym.year}-${month}-01`).getDay();
+    setMonthFirstDay(firstDayOfMonth);
     setSelectedYear(ym.year);
     setSelectedMonth(month);
   }, []);
@@ -54,14 +57,22 @@ const Calendar: React.FC = () => {
 
   const nextMonth = () => {
     const selectedDate = next(selectedYear, selectedMonth);
+    const year = selectedDate.nextYear;
+    const month = selectedDate.nextMonth
+    const firstDayOfMonth = new Date(`${year}-${month}-01`).getDay();
     setDays(selectedDate.days);
+    setMonthFirstDay(firstDayOfMonth);
     setSelectedYear(selectedDate.nextYear);
     setSelectedMonth(selectedDate.nextMonth);
   }
 
   const prevMonth = () => {
     const selectedDate = prev(selectedYear, selectedMonth);
+    const year = selectedDate.prevYear;
+    const month = selectedDate.prevMonth
+    const firstDayOfMonth = new Date(`${year}-${month}-01`).getDay();
     setDays(selectedDate.days);
+    setMonthFirstDay(firstDayOfMonth);
     setSelectedYear(selectedDate.prevYear);
     setSelectedMonth(selectedDate.prevMonth);
   }
@@ -77,8 +88,8 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        calendar={getCalendar(days, games)}    // use api data : games
-        //calendar={getCalendar(days, events)} // use static data : events
+        //calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
+        calendar={getCalendar(days, monthFirstDay, events)} // use static data : events
         eventImages={getImageList()}
       />
     </div>

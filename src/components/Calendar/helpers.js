@@ -17,20 +17,22 @@ function getImageList() {
 
 function getSelectedYearMonth(location) {
   const CurrentYear = new Date().getFullYear();
+
   const { pathname } = location;
+  if(pathname.length < 7) {
+    window.history.back();
+  }
+
   const params = pathname.split('/');
+  if (params.length < 3) {
+    window.history.back();
+  }
+
   const year = Number(params[1]);
   const month = Number(params[2]);
 
-  if(pathname.length < 7) {
-    return {
-      year: CurrentYear,
-      month: 1
-    };
-  }
-
   if (!validYear(year) || !validMonth(month)) {
-    return { year: -1, month: -1};
+    window.history.back();
   }
 
   return {
@@ -39,7 +41,31 @@ function getSelectedYearMonth(location) {
   };
 };
 
-const getCalendar = (daysInMonth, events) => {
+const daysInMonth = (year, month) => 
+    new Date(year, month, 0).getDate();
+
+const getPrevMonthDays = () => {
+  const { pathname } = window.location;
+  const params = pathname.split('/');
+  
+  let year = parseInt(params[1]);
+  let month = parseInt(params[2]);
+
+  if (month === 1) {
+    month = 0;
+    year -= 1;
+  } else {
+    month -= 1;
+  }
+
+  return daysInMonth(year, month);
+};
+
+const getCalendar = (daysInMonth, monthFirstDay, events) => {
+  //const daysInPrevMonth = getPrevMonthDays();
+  //console.log("firstDayOfMonth = " + monthFirstDay);
+  //console.log("daysInPrevMonth = " + daysInPrevMonth);
+
   const calendarData = [];
   let oneWeek = [];
   for(let i = 1; i <= daysInMonth; i++) {
@@ -63,9 +89,6 @@ const getCalendar = (daysInMonth, events) => {
   if (!!oneWeek.length) calendarData.push(oneWeek);
   return calendarData;
 };
-
-const daysInMonth = (year, month) => 
-    new Date(year, month, 0).getDate();
 
 const next = (selectedYear, selectedMonth) => {
   let nextYear = selectedYear;
