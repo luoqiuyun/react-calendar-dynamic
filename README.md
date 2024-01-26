@@ -1,6 +1,38 @@
 # React v18 Dynamic Events Calendar
+[Luo, Qiu Yun](https://cool-sawine-66ea12.netlify.app/)
 
-[DEMO](https://cool-sawine-66ea12.netlify.app/)
+This is to create a calendar UI of a calendar application 
+that displays upcoming video games launches. [Google Share Link](https://drive.google.com/drive/folders/1PtpkEH0ysG5HvHpdPKjzr0ZrV30At9X3?usp=sharing)
+
+#
+## App Features
+
+- URL driven dynamic events calendar in a "Monthly" view
+- Provide 'Previous' and 'Next' buttons to allow navigation between months
+- Visiting an invalid date (pathname) will be redirected to the current date
+- client-side algorithm for events placement within the calendar cells
+- Clicking on a calendar event opens a simple view showing details of the event
+- react.js
+- react router
+- typescript
+- CSS Grid
+- unit testing
+- JAMstack Serverless with Netlify function API services
+
+The above features were implemented in order to compliant to the assignment requirments:
+- Mastery of React/JavaScript/TypeScript, HTML, CSS, and other aspects of UI 
+
+
+### [DEMO](https://cool-sawine-66ea12.netlify.app/)
+
+- https://cool-sawine-66ea12.netlify.app/
+
+- https://cool-sawine-66ea12.netlify.app/2023/12
+
+- https://cool-sawine-66ea12.netlify.app/2025/2
+
+
+## Screenshots
 
 ![Screenshot](screenshot.png)
 ![Screenshot](screenshot2.png)
@@ -12,27 +44,13 @@ This is a [React](https://reactjs.org/) project bootstrapped with [Create React 
 For this app, I made use of react.js and Serverless pattern with Netlify to create a Dynamic Events Calendar application that takes in pre-defined game events and generate a monthly calendar with events randomly attached to days that are also randomly choosen.  Test it out [here](https://cool-sawine-66ea12.netlify.app/).
 
 
-## App Features
-
-- URL driven dynamic events calendar in the “Monthly” view
-- Provide 'Previous' and 'Next' buttons to allow navigation between months
-- Visiting an invalid date will be redirected to the current date
-- client-side algorithm for event placement within the calendar cells
-- Clicking on a calendar event opens a simple view showing details of the event
-- react.js
-- typescript
-- CSS Grid
-- unit testing
-- JAMstack Serverless with Netlify
-
-
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `yarn`
 
-Install the dependencies.
+Installs the dependencies.
 
 ### `yarn start`
 
