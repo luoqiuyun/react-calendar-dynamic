@@ -32,8 +32,10 @@ const Calendar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const ym = getSelectedYearMonth(location);
+    const { pathname } = location;
+    if(pathname.length === 1) return;
 
+    const ym = getSelectedYearMonth(location);
     if (!validMonth(ym.month) || !validYear(ym.year)) {
       window.history.back();
     }
