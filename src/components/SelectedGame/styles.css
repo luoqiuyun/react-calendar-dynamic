@@ -18,7 +18,7 @@
 .button.learn-more {
   position: absolute;
   top: 220px;
-  left: 70px;
+  left: 65px;
   background-color: #4169E1;
   border: none;
   color: #bbb;
@@ -34,7 +34,7 @@
 .button.pre-order-now {
   position: absolute;
   top: 220px;
-  left: 155px;
+  left: 150px;
   background-color: #D2691E;
   border: none;
   color: #bbb;
@@ -50,15 +50,13 @@
 .available {
   position: absolute;
   top: 190px;
-  left: 70px;
+  left: 65px;
   color: #bbb;
   font-size: 15px;
 }
 .Description {
   position: absolute;
-  top: 70px;
-  left: 70px;
+  top: 50px;
+  left: 65px;
   color: #999;
-  font-size: 12px;
-  width: 400px;
 }

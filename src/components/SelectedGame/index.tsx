@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import './styles.css';
 import { nthNumber, getMonthNames } from "./helpers";
 import { Game, Images } from "../types";
@@ -9,10 +9,25 @@ type SelectedGameProps = {
 };
 
 const SelectedGame: React.FC<SelectedGameProps> = ({ game, images }) => {
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const isMobile = width <= 768;
+  const windowResize = () => setWidth(window.innerWidth);
 
-  const thumb = game && game.imageFilenameFull ? game.imageFilenameFull : 'none';
-  const imgUrl = images.find(element => element.includes(thumb)) || '';
+  const full = game && game.imageFilenameFull ? game.imageFilenameFull : 'none';
+  const imgUrl = images.find(element => element.includes(full)) || '';
   const months = getMonthNames();
+
+  useEffect(() => {
+    window.addEventListener('resize', windowResize);
+    return () => window.removeEventListener('resize', windowResize);
+  }, []);
+
+  const descriptionStyles = () => {
+    return {
+      width: !isMobile ? '420px' : '250px',
+      fontSize: !isMobile ? '12px' : '11px',
+    }
+  };
 
   const dateAvailable = () => {
     const { pathname } = window.location;
@@ -46,7 +61,7 @@ const SelectedGame: React.FC<SelectedGameProps> = ({ game, images }) => {
   return (
     <div className="selected-container">
       <div className="selected" style={{backgroundImage: `url(${imgUrl})`}}>
-        <div className="Description">{gameDescription()} {game.summary}</div>
+        <div className="Description" style={descriptionStyles()}>{gameDescription()} {game.summary}</div>
         <div className="available">Available {dateAvailable()}</div>
         <button className="button learn-more" onClick={openLearnMorePage}>Learn More</button>
         <button className="button pre-order-now" onClick={openPurchasePage}>Pre Order Now</button>
