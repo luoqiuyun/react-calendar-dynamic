@@ -17,7 +17,7 @@ const Weekdays: React.FC = () => {
     <div className="weekday-container">
       {daysOfWeek.map((weekday, i) => 
         <div key={`weekday-${i}`} className="week-day">
-          {weekday}
+          {weekday.substr(0, 2)}
         </div>
       )}
     </div>
