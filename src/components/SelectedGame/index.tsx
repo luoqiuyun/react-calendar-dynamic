@@ -24,7 +24,7 @@ const SelectedGame: React.FC<SelectedGameProps> = ({ game, images }) => {
 
   const descriptionStyles = () => {
     return {
-      width: !isMobile ? '420px' : '250px',
+      width: !isMobile ? '420px' : '200px',
       fontSize: !isMobile ? '12px' : '11px',
     }
   };
