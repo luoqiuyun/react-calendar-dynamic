@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { events } from "../../assets/events";
-import { Game } from "../types";
 import Selector from "../Selector";
 import Weekdays from "../Weekdays";
 import Month from "../Month";
@@ -22,19 +21,9 @@ const Calendar: React.FC = () => {
   const [monthFirstDay, setMonthFirstDay] = useState(1);
   const [selectedMonth, setSelectedMonth] = useState(1);
   const [selectedYear, setSelectedYear] = useState(2024);
-  const [calendar, setCalendar] = useState<Game[][]>(getCalendar(days, monthFirstDay, events));
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  const newCalendar = () => {
-    return getCalendar(days, monthFirstDay, games);    // api
-    return getCalendar(days, monthFirstDay, events);   // static
-  }
-
-  useEffect(() => {
-    setCalendar(newCalendar());
-  }, [selectedMonth]);
 
   useEffect(() => {
     fetch('/api/games')
@@ -52,8 +41,8 @@ const Calendar: React.FC = () => {
     }
     const firstDayOfMonth = new Date(`${ym.year}-${ym.month}-1`).getDay();
     setMonthFirstDay(firstDayOfMonth);
-    setSelectedYear(ym.year);
     setSelectedMonth(ym.month !== 12 ? ym.month : 0);
+    setSelectedYear(ym.year);
   }, []);
 
   useEffect(() => {
@@ -71,8 +60,8 @@ const Calendar: React.FC = () => {
     const firstDayOfMonth = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
     setMonthFirstDay(firstDayOfMonth);
     setDays(selectedDate.days);
-    setSelectedYear(year);
     setSelectedMonth(month);
+    setSelectedYear(year);
   }
 
   const prevMonth = () => {
@@ -82,8 +71,8 @@ const Calendar: React.FC = () => {
     const firstDayOfMonth = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
     setMonthFirstDay(firstDayOfMonth);
     setDays(selectedDate.days);
-    setSelectedYear(year);
     setSelectedMonth(month);
+    setSelectedYear(year);
   }
 
   return (
@@ -97,7 +86,8 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        calendar={calendar}
+        calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
+        //calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
         eventImages={getImageList()}
       />
     </div>
