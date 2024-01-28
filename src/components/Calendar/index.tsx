@@ -11,16 +11,17 @@ import {
   prev,
   next,
   isValidMonth,
-  isValidYear
+  isValidYear,
+  getDefaultDate
 } from "./helpers";
 
 const Calendar: React.FC = () => {
-  
+  const defaultDate = getDefaultDate();
   const [games, setGames] = useState([]);
   const [days, setDays] = useState(31);
-  const [monthFirstDay, setMonthFirstDay] = useState(1);
-  const [selectedMonth, setSelectedMonth] = useState(1);
-  const [selectedYear, setSelectedYear] = useState(2024);
+  const [monthFirstDay, setMonthFirstDay] = useState(defaultDate.firstDay);
+  const [selectedMonth, setSelectedMonth] = useState(defaultDate.month);
+  const [selectedYear, setSelectedYear] = useState(defaultDate.year);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -86,8 +87,8 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        //calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
-        calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
+        calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
+        //calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
         eventImages={getImageList()}
       />
     </div>

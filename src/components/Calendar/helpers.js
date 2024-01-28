@@ -141,11 +141,20 @@ const prev = (selectedYear, selectedMonth) => {
   };
 }
 
+const getDefaultDate = () => {
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+  const firstDay = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
+
+  return { year, month, firstDay };
+};
+
 export {
   prev,
   next,
   isValidYear,
   isValidMonth,
+  getDefaultDate,
   getCalendar,
   getImageList,
   getSelectedYearMonth
