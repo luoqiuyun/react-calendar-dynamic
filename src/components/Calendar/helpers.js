@@ -24,10 +24,12 @@ function getSelectedYearMonth(location) {
   }
 
   const params = pathname.split('/');
+/*
   if (params.length < 3) {
     window.history.back();
   }
 
+*/
   const year = Number(params[1]);
   const month = Number(params[2]);
 
