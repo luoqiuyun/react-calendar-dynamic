@@ -1,11 +1,11 @@
-function validYear(year) {
-  const pattern = /(?:(?:19|20)[0-9]{2})/g;
-  return pattern.test(year);
+function isValidYear(year) {
+  const parsedYear = parseInt(year, 10);
+  return !isNaN(parsedYear) && parsedYear >= 2000 && parsedYear <= 2026;
 }
 
-function validMonth(month) {
-  const pattern = /(^0?[1-9]$)|(^1[0-2]$)/;
-  return pattern.test(month);
+function isValidMonth(month) {
+  const parsedMonth = parseInt(month, 10);
+  return !isNaN(parsedMonth) && parsedMonth >= 1 && parsedMonth <= 12;
 }
 
 function getImageList() {
@@ -24,22 +24,25 @@ function getSelectedYearMonth(location) {
   }
 
   const params = pathname.split('/');
-/*
-  if (params.length < 3) {
+
+  if (params.length !== 3) {
     window.history.back();
   }
 
-*/
   const year = Number(params[1]);
   const month = Number(params[2]);
 
-  if (!validYear(year) || !validMonth(month)) {
+  if (!isValidYear(year)) {
+    window.history.back();
+  }
+
+  if (!isValidMonth(month)) {
     window.history.back();
   }
 
   return {
-    year: validYear(year) ? year : Number(CurrentYear),
-    month: validMonth(month) ? month : 1
+    year: isValidYear(year) ? year : Number(CurrentYear),
+    month: isValidMonth(month) ? month : 1
   };
 };
 
@@ -141,8 +144,8 @@ const prev = (selectedYear, selectedMonth) => {
 export {
   prev,
   next,
-  validYear,
-  validMonth,
+  isValidYear,
+  isValidMonth,
   getCalendar,
   getImageList,
   getSelectedYearMonth

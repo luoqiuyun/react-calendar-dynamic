@@ -10,8 +10,8 @@ import {
   getCalendar,
   prev,
   next,
-  validMonth,
-  validYear
+  isValidMonth,
+  isValidYear
 } from "./helpers";
 
 const Calendar: React.FC = () => {
@@ -36,7 +36,7 @@ const Calendar: React.FC = () => {
     if(pathname.length === 1) return;
 
     const ym = getSelectedYearMonth(location);
-    if (!validMonth(ym.month) || !validYear(ym.year)) {
+    if (!isValidMonth(ym.month) || !isValidYear(ym.year)) {
       window.history.back();
     }
     const firstDayOfMonth = new Date(`${ym.year}-${ym.month}-1`).getDay();
@@ -86,8 +86,8 @@ const Calendar: React.FC = () => {
       <hr />
       <Weekdays />
       <Month
-        calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
-        //calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
+        //calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
+        calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
         eventImages={getImageList()}
       />
     </div>
