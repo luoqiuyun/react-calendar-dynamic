@@ -15,9 +15,19 @@ function getImageList() {
   return imageList;
 }
 
-function getSelectedYearMonth(location) {
-  const CurrentYear = new Date().getFullYear();
+const daysInMonth = (year, month) =>
+  new Date(year, month, 0).getDate();
 
+const getDefaultDate = () => {
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+  const days = daysInMonth(year, month);;
+  const firstDay = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
+
+  return { year, month, firstDay, daysInMonth: days };
+};
+
+function getSelectedYearMonth(location) {
   const { pathname } = location;
   if(pathname.length < 7) {
     window.history.back();
@@ -40,14 +50,12 @@ function getSelectedYearMonth(location) {
     window.history.back();
   }
 
+  const defaultDate = getDefaultDate();
   return {
-    year: isValidYear(year) ? year : Number(CurrentYear),
-    month: isValidMonth(month) ? month : 1
+    year: isValidYear(year) ? year : Number(defaultDate.year),
+    month: isValidMonth(month) ? month : defaultDate.month
   };
 };
-
-const daysInMonth = (year, month) =>
-  new Date(year, month, 0).getDate();
 
 const getPrevMonthDays = () => {
   const { pathname } = window.location;
@@ -64,39 +72,6 @@ const getPrevMonthDays = () => {
   }
 
   return daysInMonth(year, month);
-};
-
-const getCalendar = (daysInMonth, monthFirstDay, events) => {
-  const daysInPrevMonth = getPrevMonthDays();
-  const calendarData = [];
-  let oneWeek = [];
-
-  for(let i = 0; i < monthFirstDay; i++) {
-    const dayofMonth = {"dom": daysInPrevMonth - i, prevMonth: true};
-    oneWeek.unshift(dayofMonth);
-  }
-
-  for(let i = 1; i <= daysInMonth; i++) {
-    const addEvent = Math.random() > 0.7;
-    const eventCount = events.length;
-    const eventIdx = Math.floor(Math.random() * eventCount);
-
-    if (!!addEvent) {
-      const event = {...events[eventIdx], "dom": i, prevMonth: false};
-      oneWeek.push(event);
-    } else {
-      const dayofMonth = {"dom": i, prevMonth: false};
-      oneWeek.push(dayofMonth);
-    }
-
-    const total = i + monthFirstDay;
-    if (!(total % 7)) {
-      calendarData.push(oneWeek);
-      oneWeek = [];
-    }
-  }
-  if (!!oneWeek.length) calendarData.push(oneWeek);
-  return calendarData;
 };
 
 const next = (selectedYear, selectedMonth) => {
@@ -141,12 +116,37 @@ const prev = (selectedYear, selectedMonth) => {
   };
 }
 
-const getDefaultDate = () => {
-  const year = new Date().getFullYear();
-  const month = new Date().getMonth() + 1;
-  const firstDay = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
+const getCalendar = (daysInMonth, monthFirstDay, events) => {
+  const daysInPrevMonth = getPrevMonthDays();
+  const calendarData = [];
+  let oneWeek = [];
 
-  return { year, month, firstDay };
+  for(let i = 0; i < monthFirstDay; i++) {
+    const dayofMonth = {"dom": daysInPrevMonth - i, prevMonth: true};
+    oneWeek.unshift(dayofMonth);
+  }
+
+  for(let i = 1; i <= daysInMonth; i++) {
+    const addEvent = Math.random() > 0.7;
+    const eventCount = events.length;
+    const eventIdx = Math.floor(Math.random() * eventCount);
+
+    if (!!addEvent) {
+      const event = {...events[eventIdx], "dom": i, prevMonth: false};
+      oneWeek.push(event);
+    } else {
+      const dayofMonth = {"dom": i, prevMonth: false};
+      oneWeek.push(dayofMonth);
+    }
+
+    const total = i + monthFirstDay;
+    if (!(total % 7)) {
+      calendarData.push(oneWeek);
+      oneWeek = [];
+    }
+  }
+  if (!!oneWeek.length) calendarData.push(oneWeek);
+  return calendarData;
 };
 
 export {

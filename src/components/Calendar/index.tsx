@@ -18,7 +18,7 @@ import {
 const Calendar: React.FC = () => {
   const defaultDate = getDefaultDate();
   const [games, setGames] = useState([]);
-  const [days, setDays] = useState(31);
+  const [days, setDays] = useState(defaultDate.daysInMonth);
   const [monthFirstDay, setMonthFirstDay] = useState(defaultDate.firstDay);
   const [selectedMonth, setSelectedMonth] = useState(defaultDate.month);
   const [selectedYear, setSelectedYear] = useState(defaultDate.year);
