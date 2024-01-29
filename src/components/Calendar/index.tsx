@@ -14,7 +14,7 @@ import {
   isValidYear,
   getDefaultDate,
   firstDayInMonth
-} from "../calendarHelps.js";
+} from "./helpers";
 
 const Calendar: React.FC = () => {
   const defaultDate = getDefaultDate();
