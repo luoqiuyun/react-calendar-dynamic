@@ -28,9 +28,19 @@ const Calendar: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
+
     fetch('/api/games')
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(response);
+    })
     .then(data => setGames(data))
+    .catch((response) => {
+      console.log('localhost call Netlify api failed ... expected! not a surprise.');
+    });
+
   }, []);
 
   useEffect(() => {
