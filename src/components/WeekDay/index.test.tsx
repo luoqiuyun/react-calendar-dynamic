@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { mockImages, mockGames} from '../../assets/test-mocks'
+import { mockImages, mockGames} from 'assets/test-mocks'
 import WeekDay from './index';
 
 describe('WeekDay component', () => {

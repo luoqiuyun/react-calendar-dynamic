@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import './styles.css';
 import { nthNumber, getMonthNames, removeTags } from "./helpers";
-import { Game, Images } from "../types";
+import { Game, Images } from "components/types";
 
 type SelectedGameProps = {
   game: Game;

@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { mockWeekImages, mockGames} from '../../assets/test-mocks'
+import { mockWeekImages, mockGames} from 'assets/test-mocks'
 import Week from './index';
 
 describe('Week component', () => {

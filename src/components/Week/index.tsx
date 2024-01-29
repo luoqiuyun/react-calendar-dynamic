@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
-import { Game, Images } from "../types";
-import WeekDay from "../WeekDay";
+import { Game, Images } from "components/types";
+import WeekDay from "components/WeekDay";
 
 type WeekProps = {
   week: number;

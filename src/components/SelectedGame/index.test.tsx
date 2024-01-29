@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { mockImages } from '../../assets/test-mocks'
+import { mockImages } from 'assets/test-mocks'
 import SelectedGame from './index';
 
 const mockGame = {

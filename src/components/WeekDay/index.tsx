@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-import { Game, Images } from "../types";
+import { Game, Images } from "components/types";
 
 type WeekDayProps = {
   game?: Game;

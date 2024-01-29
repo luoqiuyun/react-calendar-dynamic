@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Game, Calendar, Images } from "../types";
-import SelectedGame from "../SelectedGame";
-import Week from "../Week";
+import { Game, Calendar, Images } from "components/types";
+import SelectedGame from "components/SelectedGame";
+import Week from "components/Week";
 
 type MonthProps = {
   calendar: Calendar;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { events } from "../../assets/events";
-import Selector from "../Selector";
-import Weekdays from "../Weekdays";
-import Month from "../Month";
+import { events } from "assets/events";
+import Selector from "components/Selector";
+import Weekdays from "components/Weekdays";
+import Month from "components/Month";
 import {
   getImageList,
   getSelectedYearMonth,

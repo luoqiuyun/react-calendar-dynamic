@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import Weekdays from './index'; // Adjust the import path as necessary
+import Weekdays from './index';
 
 describe('Weekdays component', () => {
   test('renders all days of the week', () => {
