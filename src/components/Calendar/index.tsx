@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import { events } from "assets/events";
+import { Game, DefaultDate } from "components/types";
 import Selector from "components/Selector";
 import Weekdays from "components/Weekdays";
 import Month from "components/Month";
@@ -12,36 +12,25 @@ import {
   next,
   isValidMonth,
   isValidYear,
-  getDefaultDate,
-  firstDayInMonth
+  firstDayInMonth,
+  daysInMonth,
+  getPathDate
 } from "./helpers";
 
-const Calendar: React.FC = () => {
-  const defaultDate = getDefaultDate();
-  const [games, setGames] = useState([]);
-  const [days, setDays] = useState(defaultDate.daysInMonth);
-  const [monthFirstDay, setMonthFirstDay] = useState(defaultDate.firstDay);
-  const [selectedMonth, setSelectedMonth] = useState(defaultDate.month);
-  const [selectedYear, setSelectedYear] = useState(defaultDate.year);
+type CalendarProps = {
+  pathDate: DefaultDate;
+  events: Game[];
+  games: Game[];
+};
+
+const Calendar: React.FC<CalendarProps> = ({games, events, pathDate}) => {
+  const [days, setDays] = useState(pathDate.daysInMonth);
+  const [monthFirstDay, setMonthFirstDay] = useState(pathDate.firstDay);
+  const [selectedMonth, setSelectedMonth] = useState(pathDate.month);
+  const [selectedYear, setSelectedYear] = useState(pathDate.year);
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-
-    fetch('/api/games')
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(response);
-    })
-    .then(data => setGames(data))
-    .catch((response) => {
-      console.log('');
-    });
-
-  }, []);
 
   useEffect(() => {
     const { pathname } = location;
@@ -51,6 +40,7 @@ const Calendar: React.FC = () => {
     if (!isValidMonth(ym.month) || !isValidYear(ym.year)) {
       window.history.back();
     }
+    setDays(daysInMonth(ym.year, ym.month));
     setMonthFirstDay(firstDayInMonth(ym.year, ym.month));
     setSelectedMonth(ym.month !== 12 ? ym.month : 0);
     setSelectedYear(ym.year);
@@ -68,11 +58,11 @@ const Calendar: React.FC = () => {
     const selectedDate = next(selectedYear, selectedMonth);
     const year = selectedDate.nextYear;
     const month = selectedDate.nextMonth
-    const firstDayOfMonth = firstDayInMonth(year, month);
-    setMonthFirstDay(firstDayOfMonth);
-    setDays(selectedDate.days);
-    setSelectedMonth(month);
-    setSelectedYear(year);
+    const nextPathDate = getPathDate(year, month);
+    setDays(nextPathDate.daysInMonth);
+    setMonthFirstDay(nextPathDate.firstDay);
+    setSelectedMonth(nextPathDate.month);
+    setSelectedYear(nextPathDate.year);
   }
 
   const prevMonth = () => {

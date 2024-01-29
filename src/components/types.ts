@@ -11,8 +11,15 @@ type Game = {
   prevMonth?: boolean;
 };
 
+type DefaultDate = {
+  year: number;
+  month: number;
+  firstDay: number;
+  daysInMonth: number;
+};
+
 type Images = string[];
 
 type Calendar = Game[][];
 
-export type { Game, Calendar, Images };
+export type { Game, Calendar, Images, DefaultDate };

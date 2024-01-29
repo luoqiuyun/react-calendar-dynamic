@@ -1,12 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import EventsCalendar from "components/Calendar";
+import DynamicCalendar from "components/DynamicCalendar";
 
 const App: React.FC = () => {
 
   return (
     <Routes>
-      <Route path="*" element={<EventsCalendar />} />
+      <Route path="*" element={<DynamicCalendar />} />
     </Routes>
   );
 };

@@ -161,9 +161,9 @@ export {
   isValidMonth,
   getDefaultDate,
   getPathDate,
+  daysInMonth,
   firstDayInMonth,
   getCalendar,
   getImageList,
-  getSelectedYearMonth,
-  daysInMonth
+  getSelectedYearMonth
 };
