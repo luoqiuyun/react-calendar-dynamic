@@ -80,7 +80,7 @@ const next = (selectedYear, selectedMonth) => {
   let nextMonth = selectedMonth;
 
   if (selectedMonth === 0) {
-    nextYear += + 1;
+    nextYear += 1;
     nextMonth = 1  // Jan.
   } else if(selectedMonth === 11) {
     nextMonth = 0; // Dec.
@@ -89,11 +89,7 @@ const next = (selectedYear, selectedMonth) => {
   }
   const days = daysInMonth(nextYear, nextMonth);
 
-  return {
-    days: days,
-    nextYear: nextYear,
-    nextMonth: nextMonth
-  };
+  return { days, nextMonth, nextYear };
 }
 
 const prev = (selectedYear, selectedMonth) => {
@@ -110,11 +106,7 @@ const prev = (selectedYear, selectedMonth) => {
   }
   const days = daysInMonth(prevYear, prevMonth);
 
-  return {
-    days: days,
-    prevYear: prevYear,
-    prevMonth: prevMonth
-  };
+  return { days, prevMonth, prevYear };
 }
 
 const getCalendar = (daysInMonth, monthFirstDay, events) => {
