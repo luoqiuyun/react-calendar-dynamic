@@ -12,7 +12,8 @@ import {
   next,
   isValidMonth,
   isValidYear,
-  getDefaultDate
+  getDefaultDate,
+  firstDayInMonth
 } from "./helpers";
 
 const Calendar: React.FC = () => {
@@ -40,8 +41,7 @@ const Calendar: React.FC = () => {
     if (!isValidMonth(ym.month) || !isValidYear(ym.year)) {
       window.history.back();
     }
-    const firstDayOfMonth = new Date(`${ym.year}-${ym.month}-1`).getDay();
-    setMonthFirstDay(firstDayOfMonth);
+    setMonthFirstDay(firstDayInMonth(ym.year, ym.month));
     setSelectedMonth(ym.month !== 12 ? ym.month : 0);
     setSelectedYear(ym.year);
   }, []);
@@ -58,7 +58,7 @@ const Calendar: React.FC = () => {
     const selectedDate = next(selectedYear, selectedMonth);
     const year = selectedDate.nextYear;
     const month = selectedDate.nextMonth
-    const firstDayOfMonth = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
+    const firstDayOfMonth = firstDayInMonth(year, month);
     setMonthFirstDay(firstDayOfMonth);
     setDays(selectedDate.days);
     setSelectedMonth(month);
@@ -69,7 +69,7 @@ const Calendar: React.FC = () => {
     const selectedDate = prev(selectedYear, selectedMonth);
     const year = selectedDate.prevYear;
     const month = selectedDate.prevMonth
-    const firstDayOfMonth = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
+    const firstDayOfMonth = firstDayInMonth(year, month);
     setMonthFirstDay(firstDayOfMonth);
     setDays(selectedDate.days);
     setSelectedMonth(month);

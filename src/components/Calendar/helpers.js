@@ -1,6 +1,8 @@
 function isValidYear(year) {
   const parsedYear = parseInt(year, 10);
-  return !isNaN(parsedYear) && parsedYear >= 2000 && parsedYear <= 2026;
+  const currentYear = new Date().getFullYear();
+  const parsedCurrent = parseInt(currentYear, 10);
+  return !isNaN(parsedYear) && parsedYear >= (parsedCurrent - 5) && parsedYear <= (parsedCurrent + 5);
 }
 
 function isValidMonth(month) {
@@ -18,41 +20,40 @@ function getImageList() {
 const daysInMonth = (year, month) =>
   new Date(year, month, 0).getDate();
 
+const firstDayInMonth = (year, month) => {
+  const firstDay = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
+  return firstDay;
+};
+
 const getDefaultDate = () => {
   const year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
   const days = daysInMonth(year, month);;
-  const firstDay = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
+  const firstDay = firstDayInMonth(year, month);
 
-  return { year, month, firstDay, daysInMonth: days };
+  return {
+    year: parseInt(year),
+    month: parseInt(month),
+    firstDay: parseInt(firstDay),
+    daysInMonth: parseInt(days)
+  };
 };
 
 function getSelectedYearMonth(location) {
   const { pathname } = location;
-  if(pathname.length < 7) {
-    window.history.back();
-  }
-
+  if(pathname.length < 7) window.history.back();
   const params = pathname.split('/');
+  if (params.length !== 3) window.history.back();
 
-  if (params.length !== 3) {
-    window.history.back();
-  }
+  const year = parseInt(params[1]);
+  const month = parseInt(params[2]);
 
-  const year = Number(params[1]);
-  const month = Number(params[2]);
-
-  if (!isValidYear(year)) {
-    window.history.back();
-  }
-
-  if (!isValidMonth(month)) {
-    window.history.back();
-  }
+  if (!isValidYear(year)) window.history.back();
+  if (!isValidMonth(month)) window.history.back();
 
   const defaultDate = getDefaultDate();
   return {
-    year: isValidYear(year) ? year : Number(defaultDate.year),
+    year: isValidYear(year) ? year : defaultDate.year,
     month: isValidMonth(month) ? month : defaultDate.month
   };
 };
@@ -155,6 +156,7 @@ export {
   isValidYear,
   isValidMonth,
   getDefaultDate,
+  firstDayInMonth,
   getCalendar,
   getImageList,
   getSelectedYearMonth
