@@ -38,7 +38,7 @@ const Calendar: React.FC = () => {
     })
     .then(data => setGames(data))
     .catch((response) => {
-      console.log('localhost call Netlify api failed ... expected! not a surprise.');
+      console.log('');
     });
 
   }, []);
