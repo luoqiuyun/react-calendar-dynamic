@@ -11,13 +11,3 @@ const usePrevLocation = (location) => {
 };
 
 export default usePrevLocation;
-/*
-use:
-
-import { useLocation } from "react-router-dom";
-import usePrevLocation from "./usePrevLocation";
-
-const location = useLocation();
-const prevLocation = usePrevLocation(location);
-
-*/

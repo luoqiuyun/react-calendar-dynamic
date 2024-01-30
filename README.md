@@ -31,6 +31,10 @@ The above features were implemented in order to compliant to the assignment requ
 
 - https://cool-sawine-66ea12.netlify.app/2025/2
 
+- https://cool-sawine-66ea12.netlify.app/1991/9
+
+- https://cool-sawine-66ea12.netlify.app/2023/99
+
 
 ## Screenshots
 
