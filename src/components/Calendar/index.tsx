@@ -12,8 +12,6 @@ import {
   getCalendar,
   prev,
   next,
-  isValidMonth,
-  isValidYear,
   isValidLocation
 } from "./helpers";
 
