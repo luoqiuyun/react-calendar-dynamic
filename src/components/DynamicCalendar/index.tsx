@@ -19,30 +19,7 @@ const DynamicCalendar: React.FC = () => {
   const location = useLocation();
   const prevLocation = usePrevLocation(location);
 
-  const { pathname } = location;
-/*
   useEffect(() => {
-
-    const ym = getSelectedYearMonth(location);
-    if (!isValidMonth(ym.month) || !isValidYear(ym.year)) {
-      window.history.back();
-    }
-    setMonthFirstDay(firstDayInMonth(ym.year, ym.month));
-    setSelectedMonth(ym.month !== 12 ? ym.month : 0);
-    setSelectedYear(ym.year);
-
-    getCalendar(days, monthFirstDay, events)
-
-  }, [games, events]);
-*/
-  useEffect(() => {
-    const { pathname } = location;
-    if(pathname.length === 1) return;
-
-    const ym = getSelectedYearMonth(location);
-    if (!isValidMonth(ym.month) || !isValidYear(ym.year)) {
-      window.history.back();
-    }
 
     fetch('/api/games')
     .then(response => {
@@ -58,10 +35,20 @@ const DynamicCalendar: React.FC = () => {
 
   }, []);
 
+  useEffect(() => {
+    const { pathname } = location;
+    if(pathname.length === 1) return;
+
+    const ym = getSelectedYearMonth(location);
+    if (!isValidMonth(ym.month) || !isValidYear(ym.year)) {
+      window.history.back();
+    }
+
+  }, []);
+
   return (
     <EventsCalendar
       pathDate={defaultDate}
-      events={events}
       games={games}
     />
   );

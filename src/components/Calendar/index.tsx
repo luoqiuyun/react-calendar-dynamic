@@ -19,11 +19,10 @@ import {
 
 type CalendarProps = {
   pathDate: DefaultDate;
-  events: Game[];
   games: Game[];
 };
 
-const Calendar: React.FC<CalendarProps> = ({games, events, pathDate}) => {
+const Calendar: React.FC<CalendarProps> = ({games, pathDate}) => {
   const [days, setDays] = useState(pathDate.daysInMonth);
   const [monthFirstDay, setMonthFirstDay] = useState(pathDate.firstDay);
   const [selectedMonth, setSelectedMonth] = useState(pathDate.month);
@@ -87,8 +86,7 @@ const Calendar: React.FC<CalendarProps> = ({games, events, pathDate}) => {
       <hr />
       <Weekdays />
       <Month
-        calendar={getCalendar(days, monthFirstDay, games)}    // use api data : games
-        //calendar={getCalendar(days, monthFirstDay, events)}   // use static data : events
+        calendar={getCalendar(days, monthFirstDay, games)}
         eventImages={getImageList()}
       />
     </div>
