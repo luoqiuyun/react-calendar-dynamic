@@ -10,6 +10,23 @@ function isValidMonth(month) {
   return !isNaN(parsedMonth) && parsedMonth >= 1 && parsedMonth <= 12;
 }
 
+const isValidPathName = (pathname) => {
+  if(pathname.length < 7) return false;
+  const params = pathname.split('/');
+  if (params.length !== 3) return false;
+  const year = parseInt(params[1]);
+  const month = parseInt(params[2]);
+  if (!isValidYear(year)) return false;
+  if (!isValidMonth(month)) return false;
+
+  return true;
+};
+
+const isValidLocation = (location) => {
+  const { pathname } = location;
+  return isValidPathName(pathname);
+};
+
 function getImageList() {
   const images = require.context('assets/img', true);
   const imageList = images.keys().map(image => images(image));
@@ -25,57 +42,17 @@ const firstDayInMonth = (year, month) => {
   return firstDay;
 };
 
-const getDefaultDate = () => {
-  const year = new Date().getFullYear();
-  const month = new Date().getMonth() + 1;
-  const days = daysInMonth(year, month);;
-  const firstDay = firstDayInMonth(year, month);
-
-  return {
-    year: parseInt(year),
-    month: parseInt(month),
-    firstDay: parseInt(firstDay),
-    daysInMonth: parseInt(days)
-  };
-};
-
-const getPathDate = (year, month) => {
-  const days = daysInMonth(year, month);;
-  const firstDay = firstDayInMonth(year, month);
-
-  return {
-    year: parseInt(year),
-    month: parseInt(month),
-    firstDay: parseInt(firstDay),
-    daysInMonth: parseInt(days)
-  };
-};
-
-function getSelectedYearMonth(location) {
+const getYearMonth = (location) => {
   const { pathname } = location;
-  if(pathname.length < 7) window.history.back();
   const params = pathname.split('/');
-  if (params.length !== 3) window.history.back();
-
-  const year = parseInt(params[1]);
-  const month = parseInt(params[2]);
-
-  if (!isValidYear(year)) window.history.back();
-  if (!isValidMonth(month)) window.history.back();
-
-  const defaultDate = getDefaultDate();
-  return {
-    year: isValidYear(year) ? year : defaultDate.year,
-    month: isValidMonth(month) ? month : defaultDate.month
-  };
+  let year = parseInt(params[1]);
+  let month = parseInt(params[2]);
+  // if (month === 12) month = 0;
+  return { year, month };
 };
 
 const getPrevMonthDays = () => {
-  const { pathname } = window.location;
-  const params = pathname.split('/');
-  
-  let year = parseInt(params[1]);
-  let month = parseInt(params[2]);
+  let { year, month } = getYearMonth(window.location);
 
   if (month === 1) {
     month = 0;
@@ -85,6 +62,48 @@ const getPrevMonthDays = () => {
   }
 
   return daysInMonth(year, month);
+};
+
+const getDefaultDate = () => {
+  const year = new Date().getFullYear();
+  const month = new Date().getMonth() + 1;
+  const days = daysInMonth(year, month);
+  const firstDay = firstDayInMonth(year, month);
+
+  return {
+    days: parseInt(days),
+    firstDay: parseInt(firstDay),
+    month: parseInt(month),
+    year: parseInt(year)
+  };
+};
+
+const getPathDate = (location) => {
+  let { year, month } = getYearMonth(location);
+  const days = daysInMonth(year, month);
+  const firstDay = firstDayInMonth(year, month);
+
+  return {
+    days: parseInt(days),
+    firstDay: parseInt(firstDay),
+    month: parseInt(month),
+    year: parseInt(year)
+  };
+};
+
+function selectedDate(location, prevLocation) {
+  const { pathname } = location;
+  const { pathname: prevPathname } = prevLocation;
+
+  const isValidPath = isValidPathName(pathname);
+  const isValidPrevPath = isValidPathName(prevPathname);
+
+  if (!isValidPath && !isValidPrevPath) {
+    window.history.back();
+    return getDefaultDate();
+  }
+
+  return getPathDate(!isValidPath ? prevLocation : location);
 };
 
 const next = (selectedYear, selectedMonth) => {
@@ -100,8 +119,9 @@ const next = (selectedYear, selectedMonth) => {
     nextMonth += 1;
   }
   const days = daysInMonth(nextYear, nextMonth);
+  const firstDay = firstDayInMonth(nextYear, nextMonth);
 
-  return { days, nextMonth, nextYear };
+  return { days, firstDay, nextMonth, nextYear };
 }
 
 const prev = (selectedYear, selectedMonth) => {
@@ -117,8 +137,9 @@ const prev = (selectedYear, selectedMonth) => {
     prevMonth -= 1;
   }
   const days = daysInMonth(prevYear, prevMonth);
+  const firstDay = firstDayInMonth(prevYear, prevMonth);
 
-  return { days, prevMonth, prevYear };
+  return { days, firstDay, prevMonth, prevYear };
 }
 
 const getCalendar = (daysInMonth, monthFirstDay, events) => {
@@ -159,11 +180,12 @@ export {
   next,
   isValidYear,
   isValidMonth,
+  isValidLocation,
   getDefaultDate,
   getPathDate,
   firstDayInMonth,
   getCalendar,
   getImageList,
-  getSelectedYearMonth,
+  selectedDate,
   daysInMonth
 };

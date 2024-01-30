@@ -12,10 +12,10 @@ type Game = {
 };
 
 type DefaultDate = {
-  year: number;
-  month: number;
+  days: number;
   firstDay: number;
-  daysInMonth: number;
+  month: number;
+  year: number;
 };
 
 type Images = string[];

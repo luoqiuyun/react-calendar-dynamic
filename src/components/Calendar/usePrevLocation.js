@@ -11,7 +11,6 @@ const usePrevLocation = (location) => {
 };
 
 export default usePrevLocation;
-
 /*
 use:
 
