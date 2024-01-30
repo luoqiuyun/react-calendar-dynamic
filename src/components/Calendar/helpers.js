@@ -83,10 +83,12 @@ const getPathDate = (location) => {
   const days = daysInMonth(year, month);
   const firstDay = firstDayInMonth(year, month);
 
+  const parsedMonth = parseInt(month);
+
   return {
     days: parseInt(days),
     firstDay: parseInt(firstDay),
-    month: parseInt(month),
+    month: parsedMonth !== 12 ? parsedMonth : 0,
     year: parseInt(year)
   };
 };
@@ -106,53 +108,53 @@ function selectedDate(location, prevLocation) {
   return getPathDate(!isValidPath ? prevLocation : location);
 };
 
-const next = (selectedYear, selectedMonth) => {
-  let nextYear = selectedYear;
-  let nextMonth = selectedMonth;
+const next = (calendar) => {
+  let year = calendar.year;
+  let month = calendar.month;
 
-  if (selectedMonth === 0) {
-    nextYear += 1;
-    nextMonth = 1  // Jan.
-  } else if(selectedMonth === 11) {
-    nextMonth = 0; // Dec.
+  if (month === 0) {
+    year += 1;
+    month = 1  // Jan.
+  } else if(month === 11) {
+    month = 0; // Dec.
   } else {
-    nextMonth += 1;
+    month += 1;
   }
-  const days = daysInMonth(nextYear, nextMonth);
-  const firstDay = firstDayInMonth(nextYear, nextMonth);
+  const days = daysInMonth(year, month);
+  const firstDay = firstDayInMonth(year, month);
 
-  return { days, firstDay, nextMonth, nextYear };
+  return { days, firstDay, month, year };
 }
 
-const prev = (selectedYear, selectedMonth) => {
-  let prevYear = selectedYear;
-  let prevMonth = selectedMonth;
+const prev = (calendar) => {
+  let year = calendar.year;
+  let month = calendar.month;
 
-  if (selectedMonth === 1) {
-    prevYear -= 1;
-    prevMonth = 0 // Dec.
-  } else if (prevMonth === 0) {
-    prevMonth = 11;
+  if (month === 1) {
+    year -= 1;
+    month = 0 // Dec.
+  } else if (month === 0) {
+    month = 11;
   } else {
-    prevMonth -= 1;
+    month -= 1;
   }
-  const days = daysInMonth(prevYear, prevMonth);
-  const firstDay = firstDayInMonth(prevYear, prevMonth);
+  const days = daysInMonth(year, month);
+  const firstDay = firstDayInMonth(year, month);
 
-  return { days, firstDay, prevMonth, prevYear };
+  return { days, firstDay, month, year };
 }
 
-const getCalendar = (daysInMonth, monthFirstDay, events) => {
+const getCalendar = (calendar, events) => {
   const daysInPrevMonth = getPrevMonthDays();
   const calendarData = [];
   let oneWeek = [];
 
-  for(let i = 0; i < monthFirstDay; i++) {
+  for(let i = 0; i < calendar.firstDay; i++) {
     const dayofMonth = {"dom": daysInPrevMonth - i, prevMonth: true};
     oneWeek.unshift(dayofMonth);
   }
 
-  for(let i = 1; i <= daysInMonth; i++) {
+  for(let i = 1; i <= calendar.days; i++) {
     const addEvent = Math.random() > 0.7;
     const eventCount = events.length;
     const eventIdx = Math.floor(Math.random() * eventCount);
@@ -165,7 +167,7 @@ const getCalendar = (daysInMonth, monthFirstDay, events) => {
       oneWeek.push(dayofMonth);
     }
 
-    const total = i + monthFirstDay;
+    const total = i + calendar.firstDay;
     if (!(total % 7)) {
       calendarData.push(oneWeek);
       oneWeek = [];

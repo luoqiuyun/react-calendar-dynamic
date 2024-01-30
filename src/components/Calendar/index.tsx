@@ -21,27 +21,16 @@ type CalendarProps = {
 };
 
 const Calendar: React.FC<CalendarProps> = ({games, pathDate}) => {
-  const [days, setDays] = useState(pathDate.days);
-  const [monthFirstDay, setMonthFirstDay] = useState(pathDate.firstDay);
-  const [selectedMonth, setSelectedMonth] = useState(pathDate.month);
-  const [selectedYear, setSelectedYear] = useState(pathDate.year);
-
+  const [calendar, setCalenda] = useState(pathDate);
   const navigate = useNavigate();
   const location = useLocation();
   const prevLocation = usePrevLocation(location);
-
-  const setSelected = (date: DefaultDate) => {
-    setDays(date.days);
-    setMonthFirstDay(date.firstDay);
-    setSelectedMonth(date.month !== 12 ? date.month : 0);
-    setSelectedYear(date.year);
-  };
 
   useEffect(() => {
     const { pathname } = location;
     if(pathname.length === 1) {
       const date = getDefaultDate();
-      setSelected(date);
+      setCalenda(date);
       return;
     }
 
@@ -50,45 +39,38 @@ const Calendar: React.FC<CalendarProps> = ({games, pathDate}) => {
     }
 
     const date = selectedDate(location, prevLocation);
-    setSelected(date);
+    setCalenda(date);
   }, []);
 
   useEffect(() => {
-    const month = selectedMonth !== 0
-      ? selectedMonth
+    const month = calendar.month !== 0
+      ? calendar.month
       : 12;
-    const queryParam = `/${selectedYear}/${month}`;
+    const queryParam = `/${calendar.year}/${month}`;
     navigate(queryParam, {replace:true});
-  }, [selectedMonth, selectedYear, navigate]);
+  }, [calendar, navigate]);
 
   const nextMonth = () => {
-    const nextDate = next(selectedYear, selectedMonth);
-    setDays(nextDate.days);
-    setMonthFirstDay(nextDate.firstDay);
-    setSelectedMonth(nextDate.nextMonth);
-    setSelectedYear(nextDate.nextYear);
+    const nextDate = next(calendar);
+    setCalenda(nextDate);
   }
 
   const prevMonth = () => {
-    const prevDate = prev(selectedYear, selectedMonth);
-    setDays(prevDate.days);
-    setMonthFirstDay(prevDate.firstDay);
-    setSelectedMonth(prevDate.prevMonth);
-    setSelectedYear(prevDate.prevYear);
+    const prevDate = prev(calendar);
+    setCalenda(prevDate);
   }
 
   return (
     <div className="calendar-container">
       <Selector
-        month={selectedMonth}
-        year={selectedYear}
+        calendar={calendar}
         prevMonth={prevMonth}
         nextMonth={nextMonth}
       />
       <hr />
       <Weekdays />
       <Month
-        calendar={getCalendar(days, monthFirstDay, games)}
+        calendar={getCalendar(calendar, games)}
         eventImages={getImageList()}
       />
     </div>

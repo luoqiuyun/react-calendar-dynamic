@@ -1,16 +1,15 @@
 import React from 'react';
 import './styles.css';
+import { DefaultDate } from "components/types";
 
 type SelectorProps = {
-  month: number;
-  year: number;
+  calendar: DefaultDate;
   prevMonth: () => void;
   nextMonth: () => void;
 };
 
 const Selector: React.FC<SelectorProps> = ({
-  month,
-  year,
+  calendar,
   prevMonth,
   nextMonth
 }) => {
@@ -33,7 +32,7 @@ const Selector: React.FC<SelectorProps> = ({
   return (
     <div className="selector-container">
       <div className="prev" onClick={() => prevMonth()}>&#8249;</div>
-      <div className="year-month">{months[month] + ' ' + year}</div>
+      <div className="year-month">{months[calendar.month] + ' ' + calendar.year}</div>
       <div className="next" onClick={() => nextMonth()}>&#8250;</div>
     </div>
   );
