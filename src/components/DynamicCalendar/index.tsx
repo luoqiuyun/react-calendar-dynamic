@@ -12,7 +12,7 @@ import {
 } from "./helpers";
 
 const DynamicCalendar: React.FC = () => {
-  const [games, setGames] = useState([]);
+  const [games, setGames] = useState(events);
   const [calendar, setCalendar] = useState([]);
 
   const defaultDate = getDefaultDate();
