@@ -70,7 +70,7 @@ const Calendar: React.FC<CalendarProps> = ({games, pathDate}) => {
       <hr />
       <Weekdays />
       <Month
-        calendar={getCalendar(calendar, games)}
+        calendar={getCalendar(calendar, games, location)}
         eventImages={getImageList()}
       />
     </div>
