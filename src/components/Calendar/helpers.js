@@ -34,14 +34,11 @@ function getImageList() {
   return imageList;
 }
 
-const daysInMonth = (year, month) => {
-  const monthSanitized = month !== 12 ? month : 0;
-  return new Date(year, monthSanitized, 0).getDate();
-};
+const daysInMonth = (year, month) =>
+  new Date(year, month, 0).getDate();
 
 const firstDayInMonth = (year, month) => {
-  const monthSanitized = month !== 0 ? month : 12;
-  const firstDay = new Date(`${year}-${monthSanitized}-1`).getDay();
+  const firstDay = new Date(`${year}-${month !== 0 ? month:12}-1`).getDay();
   return firstDay;
 };
 
@@ -50,7 +47,21 @@ const getYearMonth = (location) => {
   const params = pathname.split('/');
   let year = parseInt(params[1]);
   let month = parseInt(params[2]);
+  // if (month === 12) month = 0;
   return { year, month };
+};
+
+const getPrevMonthDays = () => {
+  let { year, month } = getYearMonth(window.location);
+
+  if (month === 1) {
+    month = 0;
+    year -= 1;
+  } else {
+    month -= 1;
+  }
+
+  return daysInMonth(year, month);
 };
 
 const getDefaultDate = () => {
@@ -69,10 +80,9 @@ const getDefaultDate = () => {
 
 const getPathDate = (location) => {
   let { year, month } = getYearMonth(location);
-  if(!year || !month) return getDefaultDate();
-
   const days = daysInMonth(year, month);
   const firstDay = firstDayInMonth(year, month);
+
   const parsedMonth = parseInt(month);
 
   return {
@@ -134,21 +144,8 @@ const prev = (calendar) => {
   return { days, firstDay, month, year };
 }
 
-const getPrecedentMonthDays = (location) => {
-  let { year, month } = getPathDate(location);
-
-  if (month === 1) {
-    month = 0;
-    year -= 1;
-  } else {
-    month -= 1;
-  }
-
-  return daysInMonth(year, month);
-};
-
-const getCalendar = (calendar, events, location) => {
-  const daysInPrevMonth = getPrecedentMonthDays(location);
+const getCalendar = (calendar, events) => {
+  const daysInPrevMonth = getPrevMonthDays();
   const calendarData = [];
   let oneWeek = [];
 
